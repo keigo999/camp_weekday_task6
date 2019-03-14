@@ -18,6 +18,31 @@
   puts "例#{t}の答え"
   File.open("data00#{t}.txt", "r"){ |f|
     # ここにプログラムを記述してください。
+
+    members_count = f.gets.to_i
+    # メンバーの配列を生成
+    members = f.gets.split(" ")
+    value = []
+
+    # membersの数だけ値が0の配列を生成
+    members_count.times do
+      value << 0
+    end
+
+    # membersの配列をキーとして、全ての値が0のハッシュを作成
+    ary = [members, value].transpose
+    hash = Hash[*ary.flatten]
+    value_count = f.gets.to_i
+
+    # キーが同じなら値を足し合わせる
+    value_count.times do
+      ary = f.gets.split(" ")
+      hash1 = Hash[*ary]
+      hash.merge!(hash1){ |k, v1, v2| v1.to_i + v2.to_i }
+    end
+
+    # 値を降順にして出力
+    p hash.sort_by{ |k, v| v }.reverse.to_h
   }
 end
 
