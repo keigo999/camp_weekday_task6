@@ -18,6 +18,29 @@
   puts "例#{t}の答え"
   File.open("data00#{t}.txt", "r"){ |f|
     # ここにプログラムを記述してください。
+
+    n = f.gets.to_i
+    # 2行目をarray型として取得
+    members = f.gets.split
+    # 空の配列 results を定義
+    results = {}
+
+    # n回ループを使ってキーにmembersの値を、バリューに 0 を持つ配列 @results を生成する。
+    # @resultsの初期化
+    n.times do |i|
+      results[members[i]] = 0
+    end
+    # 3行目をint型として取得
+    m = f.gets.to_i
+    #m回ループを使って4~m行目をArray型として取得
+    m.times do |i|
+      cost = f.gets.split
+      #@resultsから cost[0]を探しだし、valueにcost[1]を追加していく。
+      results[cost[0]] += cost[1].to_i
+    end
+    # 全ての入力処理が終わったところで、ソートを行い、降順にする。
+    # sort_byメソッドは配列クラスへ自動変換してしまうので、Hash型へ変更し直す。
+    p results.sort_by{ | k, v | v }.reverse.to_h
   }
 end
 
